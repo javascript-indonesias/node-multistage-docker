@@ -1,0 +1,23 @@
+FROM node:lts-buster as baseimage
+
+WORKDIR /usr/app
+COPY ./package.json ./
+COPY ./package-lock.json ./
+EXPOSE 3200
+
+# STAGE production
+FROM baseimage as production
+ENV NODE_ENV=production
+RUN npm ci
+COPY ./ ./
+
+CMD ["npm", "run", "start"]
+
+# Stage development
+FROM baseimage as dev
+ENV NODE_ENV=development
+RUN npm install -g nodemon
+RUN npm install
+COPY ./ ./
+
+CMD ["npm", "run", "dev"]

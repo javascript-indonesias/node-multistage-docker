@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./
+      target: production
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - /usr/app/node_modules
+      - ./:/usr/app
+    command: npm run start
+    ports:
+      - 3200:3200
+    environment:
+      NODE_ENV: production
+# COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build

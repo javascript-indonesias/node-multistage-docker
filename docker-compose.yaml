@@ -1,0 +1,17 @@
+version: "3.8"
+services:
+  api:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile.dev
+      target: dev
+    volumes:
+      - /usr/app/node_modules
+      - ./:/usr/app
+    command: npm run dev
+    ports:
+      - 3200:3200
+    environment:
+      NODE_ENV: development
+      DEBUG: DEBUG=latihan-express-node-docker:*
+# COMPOSE_DOCKER_CLI_BUILD=1 DOCKER_BUILDKIT=1 docker-compose build
